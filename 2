@@ -1,0 +1,9 @@
+  $slideContainer.animate({'margin-left': '+=720'}, "fast", function() {
+                if (++currentSlide === $slides.length) {
+                    currentSlide = 1;
+                    $slideContainer.css('margin-left', 0);
+
+                }
+			
+            });
+        

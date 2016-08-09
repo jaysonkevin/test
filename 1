@@ -1,0 +1,8 @@
+  interval = setInterval(function() {
+            $slideContainer.animate({'margin-left': '-=720'}, 2000, function() {
+                if (++currentSlide === $slides.length) {
+                    currentSlide = 1;
+                    $slideContainer.css('margin-left', 0);
+                }
+            });
+        }, 3000);

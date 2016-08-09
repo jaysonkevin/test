@@ -1,175 +1,201 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="jquery/jquery.js"></script>
+ <script src="jquery/jquery-3.1.0.min.js">
+
+
+
+</script>
 <style type="text/css">
 
-	body{
-		background-color: grey;
+	#slider{
+		width:720px;
+		height:400px;
+		overflow:hidden;
+		margin-left:230px;
+		margin-top:120px;
+		
+
 	}
-	li{
-		overflow: hidden;
-		position: absolute;
-		margin-left: 20%;
-		margin-top: 5%;
-		list-style: none;
+	#slider .slides{
+		display:block;
+		width:6000px;
+		height:400px;
+		margin:0;
+		padding:0;
 
-
+	}
+	#slider .slide{
+		float:left;
+		list-style:none;
+		width:720px;
+		height:400px;
+	  
+		
 	}
 	img{
-		height: 400px;
-		width: 700px;
+		width:720px;
+		height:400px;
 	}
-	#btn{
-		margin-top: 440px;	
-		margin-left: 40%;
-			
-	}
-	button:hover{
-		background-color: yellow;
-	}
+	#next{
+		float:right;
 
-	h1{
-		text-align: center;
-		color: black;
+		
 	}
-	a {
-		float: right;
-		margin-top: 15%;
-		margin-right: 20%;
-		text-decoration: none;
+	#prev{
+		float:left;
+	
+		
 	}
-	#left{
-		float: left;
-		margin-top: 15%;
-		margin-left: 15%;
-		text-decoration: none;
+	.button{
+		margin-left:510px;
+		list-style:none;
+		
 	}
-
+	#button1{
+		background-color: blue;
+	}
 </style>
+</head>
+
+<body>
+<div id="slider">
+
+<ul class="slides">
+
+<li class="slide"><img src="images/1.jpg"></li>
+<li class="slide"><img src="images/2.jpg"></li>
+<li class="slide"><img src="images/3.jpg"></li>
+<li class="slide"><img src="images/4.jpg"></li>
+	
+</ul>
+
+
+
+</div>
+<div class="button">
+<li>
+<button id="button1"></button>
+<button id="button2"></button>
+<button id="button3"></button>
+<button id="button4"></button>
+</li>
+
+</div>
+<div class="button">
+
+</div>
+<a href="#" id="next" >Next</a>
+<a href="#" id="prev" >Prev</a>
+
 <script>
 
-jQuery(document).ready(function(){
 
-	animate = function(){
+$(function() {
 
-		jQuery('.img4').fadeOut(4000,function(){
-			jQuery('.img3').fadeOut(4000,function(){
-				jQuery('.img2').fadeOut(4000,function(){
-					jQuery('.img4').fadeIn(4000,function(){
-						jQuery('.img3').fadeIn(4000,function(){
-							jQuery('.img2').fadeIn(4000);
-							animate();	
-						})
-					})
-				});
-			});
+    var currentSlide = 1;
+	 
 
-		});
+    var $slider = $('#slider');
+    var $slideContainer = $('.slides', $slider);
+    var $slides = $('.slide', $slider);
+
+    var interval;
+			
+    function startSlider() {
+		        interval = setInterval(function() {
+			
+						/*if(currentSlide ==1){
+								$('#button1').css({"background-color":"blue"});
+								$('#button2').css({"background-color":"white"});
+								$('#button3').css({"background-color":"white"});
+								$('#button4').css({"background-color":"white"});
+							}
+						if(currentSlide ==1){
+								$('#button2').css({"background-color":"blue"});
+								$('#button1').css({"background-color":"white"});
+								$('#button3').css({"background-color":"white"});
+								$('#button4').css({"background-color":"white"});
+							}
+							
+						if(currentSlide ==2){
+								$('#button3').css({"background-color":"blue"});
+								$('#button1').css({"background-color":"white"});
+								$('#button2').css({"background-color":"white"});
+								$('#button4').css({"background-color":"white"});
+							}
+						if(currentSlide ==3){
+								$('#button4').css({"background-color":"blue"});
+								$('#button1').css({"background-color":"white"});
+								$('#button2').css({"background-color":"white"});
+								$('#button3').css({"background-color":"white"});
+							}*/
+
+            $slideContainer.animate({'margin-left': '-=720'}, 2000, function() {
+
+				
+				if(++currentSlide == $slides.length){
+					currentSlide=1;
+					  $slideContainer.css('margin-left', 0);
+				}
+
+			
+                
+				
+            });
+        }, 3000);
+		 
 		
+    }
+		
+
+
+    function pauseSlider() {
+        clearInterval(interval);
+    }
+
+    $slideContainer
+        .on('mouseenter', pauseSlider)
+        .on('mouseleave', startSlider);
+
+    startSlider();
+
+	$('#next').click(function(){
+		 
+            $slideContainer.animate({'margin-left': '-=720'}, "fast", function() {
+			
+                if (++currentSlide === $slides.length) {
+					
+                    currentSlide = 1;
+                    $slideContainer.css('margin-left', 0);
+                }
+            });
+        
+
+	
+
+
+	});
+
+	$('#prev').click(function(){
+		 
+         
+            $slideContainer.animate({'margin-left': '+=720'}, "fast");
+
+			if(currentSlide == 1){
+				 $slideContainer.animate({'margin-left':'-2160'},"fast");
+				 
 			}
 
-	animate();
-});
-
-
-jQuery(document).ready(function(){
-	jQuery('#btn1').click(function(){
-		jQuery('.img4').fadeIn(function(){
-			animate();
-
-
-		});
-	});
-});
-
-
-jQuery(document).ready(function(){
-	jQuery('#btn2').click(function(){
-		jQuery('.img3').fadeIn(function(){
-		animate();
-
-		});
-	});
-});
-
-jQuery(document).ready(function(){
-	jQuery('#btn3').click(function(){
-		jQuery('.img2').fadeIn(function(){
-			animate();
-
-		});
-	});
-});
-
-jQuery(document).ready(function(){
-	jQuery('#btn4').click(function(){
-		jQuery('.img1').fadeIn(function(){
-		animate();
-
-		});
-	});
-});
-
-jQuery(document).ready(function(){
-
-	jQuery('img').mouseenter(function(){
-		 jQuery("li").stop();
-	});
-	jQuery('img').mouseleave(2000,function(){
-		animate();
-	});
-	
-
-});
-
-
-	jQuery(document).ready(function(){
-		jQuery('#left').click(function(){
-			jQuery('.img3').filter(function(){
-				jQuery('.img4').fadeIn();
-			});
-		});
-	});
 		
+	});
 
-		
-
-
-
-</script> 
-</head>
- 
-<body>
-	<h1>My Own Image Slider</h1>
-
-<div id="img">
-
-
-	<li id="image" class="img1"><img src="images/1.jpg"></li>	
-	<li id="image" class="img2"><img src="images/2.jpg"></li>
-	<li id="image" class="img3"><img src="images/3.jpg"id="3"></li>
-	<li id="image" class="img4"><img src="images/4.jpg" id="4"></li>
-	<ul>
-		<li id ="btn">	<BUTTON id="btn1">1</BUTTON>
-						<BUTTON id="btn2">2</BUTTON>
-						<BUTTON id="btn3">3</BUTTON>
-						<BUTTON id="btn4">4</BUTTON>
-		</li>	
-	</ul>
-	<ul>
 	
-		<a href="#" id="right">Next</a>
-		
-	</ul>
-	
-		<button id="left">Previous</button>
-	
-</div>
+});
 
 
 
-
+</script>
 </body>
 
 </html>
